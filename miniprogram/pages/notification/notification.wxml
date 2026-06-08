@@ -1,0 +1,42 @@
+<!-- 消息通知页 -->
+<view class="page">
+  <!-- 未读计数 -->
+  <view class="unread-bar" wx:if="{{unreadCount > 0}}">
+    <text>你有 {{unreadCount}} 条未读消息</text>
+    <text class="mark-all" bindtap="markAllRead">全部已读</text>
+  </view>
+
+  <!-- 通知列表 -->
+  <view wx:if="{{notificationList.length > 0}}">
+    <view class="swipe-item" wx:for="{{notificationList}}" wx:key="id" data-index="{{index}}">
+      <view class="swipe-inner" style="transform: translateX({{swipedIndex === index ? '-140rpx' : '0'}})"
+            bindtouchstart="onTouchStart"
+            bindtouchend="onTouchEnd"
+            data-index="{{index}}">
+        <view class="swipe-content {{!item.isRead ? 'unread' : ''}}">
+          <view class="notif-item" bindtap="markRead" data-id="{{item.id}}">
+            <view class="notif-dot {{!item.isRead ? 'dot' : ''}}"></view>
+            <view class="notif-content">
+              <view class="notif-header">
+                <text class="notif-type">{{util.getNotifyTypeText(item.type)}}</text>
+                <text class="notif-time">{{util.formatDateTime(item.sendTime)}}</text>
+              </view>
+              <text class="notif-desc">{{item.content || ('药品ID: ' + item.medicineId + ' 相关提醒')}}</text>
+            </view>
+          </view>
+        </view>
+        <view class="swipe-delete" bindtap="deleteItem" data-id="{{item.id}}" data-index="{{index}}">删除</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view wx:else class="empty-state">
+    <text class="empty-icon">🔔</text>
+    <text>暂无提醒消息</text>
+  </view>
+
+  <!-- 加载更多 -->
+  <view wx:if="{{hasMore && notificationList.length > 0}}" class="load-more" bindtap="loadMore">加载更多</view>
+  <view wx:else class="no-more">— {{notificationList.length > 0 ? '没有更多了' : ''}} —</view>
+</view>

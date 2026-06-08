@@ -1,0 +1,91 @@
+<!-- 药品详情页 -->
+<view class="page">
+  <view wx:if="{{medicine}}">
+    <!-- 头部信息 -->
+    <view class="header-card">
+      <view class="header-top">
+        <text class="med-name">{{medicine.name}}</text>
+        <text class="{{util.getStatusClass(medicine.status)}}">{{util.getStatusText(medicine.status)}}</text>
+      </view>
+      <text class="med-generic" wx:if="{{medicine.genericName}}">{{medicine.genericName}}</text>
+    </view>
+
+    <!-- 详细信息 -->
+    <view class="info-card">
+      <view class="info-row">
+        <text class="info-label">批号</text>
+        <text class="info-value">{{medicine.batchNumber || '-'}}</text>
+      </view>
+      <view class="info-row">
+        <text class="info-label">有效期至</text>
+        <text class="info-value {{medicine.status === 2 ? 'text-red' : ''}}">
+          {{util.formatDate(medicine.expiryDate) || '-'}}
+          <text wx:if="{{medicine.expiryDate && medicine.status !== 3}}">
+            ({{util.getDaysUntilExpiry(medicine.expiryDate) >= 0 ? '剩余' + util.getDaysUntilExpiry(medicine.expiryDate) + '天' : '已过期'}})
+          </text>
+        </text>
+      </view>
+      <view class="info-row" wx:if="{{medicine.produceDate}}">
+        <text class="info-label">生产日期</text>
+        <text class="info-value">{{util.formatDate(medicine.produceDate)}}</text>
+      </view>
+      <view class="info-row">
+        <text class="info-label">数量</text>
+        <text class="info-value">{{medicine.quantity}} {{medicine.unit || '份'}}</text>
+      </view>
+      <view class="info-row" wx:if="{{medicine.manufacturer}}">
+        <text class="info-label">厂商</text>
+        <text class="info-value">{{medicine.manufacturer}}</text>
+      </view>
+      <view class="info-row" wx:if="{{medicine.location}}">
+        <text class="info-label">存放位置</text>
+        <text class="info-value">{{medicine.location}}</text>
+      </view>
+      <view class="info-row" wx:if="{{medicine.category}}">
+        <text class="info-label">分类</text>
+        <text class="info-value">{{medicine.category}}</text>
+      </view>
+      <view class="info-row info-row-last" wx:if="{{medicine.remark}}">
+        <text class="info-label">备注</text>
+        <text class="info-value">{{medicine.remark}}</text>
+      </view>
+    </view>
+
+    <!-- 数量操作 -->
+    <view class="action-card">
+      <view class="action-title">数量操作</view>
+      <view class="quantity-ops">
+        <button class="op-btn op-minus" bindtap="showQuantityModal" data-type="2">减少</button>
+        <text class="current-qty">{{medicine.quantity}} {{medicine.unit || '份'}}</text>
+        <button class="op-btn op-plus" bindtap="showQuantityModal" data-type="1">增加</button>
+      </view>
+    </view>
+
+    <!-- 操作按钮 -->
+    <view class="bottom-actions">
+      <button class="btn-edit" bindtap="goToEdit">编辑药品</button>
+      <button class="btn-delete" bindtap="onDelete">删除药品</button>
+    </view>
+  </view>
+
+  <!-- 加载中 -->
+  <view wx:else class="loading-container">
+    <text>加载中...</text>
+  </view>
+
+  <!-- 数量变更弹窗 -->
+  <view class="modal-overlay {{showModal ? 'show' : ''}}" bindtap="hideModal">
+    <view class="modal-content" catchtap="stopPropagation">
+      <text class="modal-title">{{modalType === 1 ? '增加' : '减少'}}数量</text>
+      <view class="modal-input-group">
+        <text class="modal-label">当前数量: {{medicine.quantity}}</text>
+        <input class="modal-input" type="number" value="{{modalQuantity}}"
+               bindinput="onModalInput" placeholder="输入数量" />
+      </view>
+      <view class="modal-btns">
+        <button class="modal-cancel" bindtap="hideModal">取消</button>
+        <button class="modal-confirm" bindtap="confirmQuantity">确认</button>
+      </view>
+    </view>
+  </view>
+</view>

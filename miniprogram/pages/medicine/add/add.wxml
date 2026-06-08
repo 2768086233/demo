@@ -1,0 +1,75 @@
+<!-- 新增/编辑药品页 -->
+<view class="page">
+  <view class="form-card">
+    <view class="form-item">
+      <text class="form-label required">药品名称</text>
+      <input class="form-input" placeholder="请输入药品名称" value="{{form.name}}" bindinput="onInput" data-field="name" />
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">通用名</text>
+      <input class="form-input" placeholder="请输入通用名" value="{{form.genericName}}" bindinput="onInput" data-field="genericName" />
+    </view>
+
+    <view class="form-item">
+      <text class="form-label required">生产批号</text>
+      <input class="form-input" placeholder="请输入生产批号" value="{{form.batchNumber}}" bindinput="onInput" data-field="batchNumber" />
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">生产日期</text>
+      <picker mode="date" value="{{form.produceDate}}" bindchange="onDateChange" data-field="produceDate">
+        <view class="picker-value">{{form.produceDate || '请选择生产日期'}}</view>
+      </picker>
+    </view>
+
+    <view class="form-item">
+      <text class="form-label required">有效期至</text>
+      <picker mode="date" value="{{form.expiryDate}}" bindchange="onDateChange" data-field="expiryDate">
+        <view class="picker-value expiry-picker {{form.expiryDate ? '' : 'placeholder'}}">{{form.expiryDate || '请选择有效期'}}</view>
+      </picker>
+    </view>
+
+    <view class="form-row">
+      <view class="form-item half">
+        <text class="form-label required">剩余数量</text>
+        <input class="form-input" type="number" placeholder="数量" value="{{form.quantity}}" bindinput="onInput" data-field="quantity" />
+      </view>
+      <view class="form-item half">
+        <text class="form-label">单位</text>
+        <picker mode="selector" range="{{unitList}}" value="{{unitIndex}}" bindchange="onUnitChange">
+          <view class="picker-value">{{unitList[unitIndex] || '请选择'}}</view>
+        </picker>
+      </view>
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">分类</text>
+      <picker mode="selector" range="{{categoryList}}" value="{{categoryIndex}}" bindchange="onCategoryChange">
+        <view class="picker-value">{{categoryList[categoryIndex] || '请选择分类'}}</view>
+      </picker>
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">存放位置</text>
+      <picker mode="selector" range="{{locationList}}" value="{{locationIndex}}" bindchange="onLocationChange">
+        <view class="picker-value">{{locationList[locationIndex] || '请选择位置'}}</view>
+      </picker>
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">厂商</text>
+      <input class="form-input" placeholder="请输入厂商" value="{{form.manufacturer}}" bindinput="onInput" data-field="manufacturer" />
+    </view>
+
+    <view class="form-item">
+      <text class="form-label">备注</text>
+      <textarea class="form-textarea" placeholder="备注信息（选填）" value="{{form.remark}}" bindinput="onInput" data-field="remark" />
+    </view>
+  </view>
+
+  <!-- 提交按钮 -->
+  <view class="submit-area">
+    <button class="btn-primary" bindtap="onSubmit">{{isEdit ? '保存修改' : '确认录入'}}</button>
+  </view>
+</view>

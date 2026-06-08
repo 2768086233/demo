@@ -1,0 +1,146 @@
+/** 药品详情页 */
+.page { padding-bottom: 100rpx; }
+
+.header-card {
+  background: #fff;
+  margin: 20rpx 30rpx;
+  padding: 30rpx;
+  border-radius: 16rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.06);
+}
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8rpx;
+}
+.med-name { font-size: 36rpx; font-weight: bold; }
+.med-generic { font-size: 26rpx; color: #999; }
+
+.info-card {
+  background: #fff;
+  margin: 0 30rpx 20rpx;
+  padding: 0 30rpx;
+  border-radius: 16rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.06);
+}
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24rpx 0;
+  border-bottom: 1rpx solid #f5f5f5;
+}
+.info-row-last { border-bottom: none; }
+.info-label { font-size: 28rpx; color: #999; }
+.info-value { font-size: 28rpx; color: #333; text-align: right; flex: 1; margin-left: 30rpx; }
+.text-red { color: #C62828; }
+
+.action-card {
+  background: #fff;
+  margin: 0 30rpx 20rpx;
+  padding: 30rpx;
+  border-radius: 16rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.06);
+}
+.action-title { font-size: 28rpx; font-weight: bold; margin-bottom: 20rpx; }
+.quantity-ops {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30rpx;
+}
+.op-btn {
+  width: 140rpx;
+  padding: 16rpx 0;
+  border-radius: 50rpx;
+  font-size: 28rpx;
+  border: none;
+}
+.op-minus {
+  background: #FFF3E0;
+  color: #E65100;
+}
+.op-plus {
+  background: #E8F5E9;
+  color: #2E7D32;
+}
+.current-qty { font-size: 32rpx; font-weight: bold; }
+
+.bottom-actions {
+  margin: 0 30rpx;
+  display: flex;
+  gap: 20rpx;
+}
+.btn-edit {
+  flex: 1;
+  background: #07C160;
+  color: #fff;
+  border: none;
+  border-radius: 50rpx;
+  padding: 22rpx 0;
+  font-size: 30rpx;
+  text-align: center;
+}
+.btn-delete {
+  flex: 1;
+  background: #fff;
+  color: #C62828;
+  border: 2rpx solid #FFCDD2;
+  border-radius: 50rpx;
+  padding: 22rpx 0;
+  font-size: 30rpx;
+  text-align: center;
+}
+
+/* 弹窗 */
+.modal-overlay {
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+}
+.modal-overlay.show { display: flex; }
+.modal-content {
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 40rpx;
+  width: 600rpx;
+}
+.modal-title { font-size: 32rpx; font-weight: bold; margin-bottom: 24rpx; }
+.modal-label { font-size: 26rpx; color: #666; margin-bottom: 16rpx; display: block; }
+.modal-input {
+  border: 2rpx solid #ddd;
+  border-radius: 12rpx;
+  padding: 20rpx;
+  font-size: 28rpx;
+  width: 100%;
+  box-sizing: border-box;
+}
+.modal-btns {
+  display: flex;
+  gap: 20rpx;
+  margin-top: 30rpx;
+}
+.modal-cancel {
+  flex: 1;
+  background: #f5f5f5;
+  border: none;
+  border-radius: 12rpx;
+  padding: 20rpx 0;
+  font-size: 28rpx;
+  text-align: center;
+}
+.modal-confirm {
+  flex: 1;
+  background: #07C160;
+  color: #fff;
+  border: none;
+  border-radius: 12rpx;
+  padding: 20rpx 0;
+  font-size: 28rpx;
+  text-align: center;
+}

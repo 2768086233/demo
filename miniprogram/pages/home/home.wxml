@@ -1,0 +1,115 @@
+<!-- 首页 -->
+<view class="page">
+  <!-- 统计卡片 -->
+  <view class="stats-grid">
+    <view class="stat-item" bindtap="goToMedicineList" data-status="">
+      <text class="stat-num">{{dashboard.total || 0}}</text>
+      <text class="stat-label">全部药品</text>
+    </view>
+    <view class="stat-item warning" bindtap="goToMedicineList" data-status="1">
+      <text class="stat-num">{{dashboard.expiringSoon || 0}}</text>
+      <text class="stat-label">临近过期</text>
+    </view>
+    <view class="stat-item danger" bindtap="goToMedicineList" data-status="2">
+      <text class="stat-num">{{dashboard.expired || 0}}</text>
+      <text class="stat-label">已过期</text>
+    </view>
+    <view class="stat-item normal" bindtap="goToMedicineList" data-status="0">
+      <text class="stat-num">{{dashboard.normal || 0}}</text>
+      <text class="stat-label">正常</text>
+    </view>
+  </view>
+
+  <!-- 快捷入口 -->
+  <view class="quick-actions">
+    <view class="action-btn" bindtap="goToAddMedicine">
+      <text class="action-icon">+</text>
+      <text class="action-text">录入药品</text>
+    </view>
+    <view class="action-btn" bindtap="goToScan">
+      <text class="action-icon">📷</text>
+      <text class="action-text">扫码录入</text>
+    </view>
+  </view>
+
+  <!-- 近期待办 -->
+  <view class="section">
+    <view class="section-header">
+      <text class="section-title">📋 近期待办</text>
+      <text class="section-more" bindtap="goToExpiringList">查看全部 ›</text>
+    </view>
+    <view wx:if="{{dashboard.upcomingExpiries && dashboard.upcomingExpiries.length > 0}}">
+      <view class="todo-item" wx:for="{{dashboard.upcomingExpiries}}" wx:key="id" bindtap="goToDetail" data-id="{{item.id}}">
+        <view class="todo-info">
+          <text class="todo-name">{{item.name}}</text>
+          <text class="todo-date">有效期至: {{util.formatDate(item.expiryDate)}}</text>
+        </view>
+        <view class="todo-right">
+          <text class="todo-days {{item.daysLeft <= 3 ? 'urgent' : ''}}">{{item.daysLeft === 0 ? '今日到期' : item.daysLeft + '天'}}</text>
+          <text class="todo-unit">剩余</text>
+        </view>
+      </view>
+    </view>
+    <view wx:else class="empty-tip">🎉 暂无近期待处理药品</view>
+  </view>
+
+  <!-- 效期分布 -->
+  <view class="section">
+    <view class="section-header">
+      <text class="section-title">📊 效期分布</text>
+    </view>
+    <view class="chart-legend">
+      <view class="legend-item">
+        <view class="legend-dot dot-red"></view>
+        <text>已过期 {{distribution.alreadyExpired || 0}}</text>
+      </view>
+      <view class="legend-item">
+        <view class="legend-dot dot-orange"></view>
+        <text>7天内到期 {{distribution.within7Days || 0}}</text>
+      </view>
+      <view class="legend-item">
+        <view class="legend-dot dot-yellow"></view>
+        <text>15天内到期 {{distribution.within15Days || 0}}</text>
+      </view>
+      <view class="legend-item">
+        <view class="legend-dot dot-green"></view>
+        <text>30天内到期 {{distribution.within30Days || 0}}</text>
+      </view>
+      <view class="legend-item">
+        <view class="legend-dot dot-blue"></view>
+        <text>90天内到期 {{distribution.within90Days || 0}}</text>
+      </view>
+      <view class="legend-item">
+        <view class="legend-dot dot-gray"></view>
+        <text>90天以上 {{distribution.beyond90Days || 0}}</text>
+      </view>
+    </view>
+
+    <!-- 简易柱状图 -->
+    <view class="bar-chart">
+      <view class="bar" style="height: {{distribution.alreadyExpired > 0 ? distribution.alreadyExpired * 12 + 10 : 10}}rpx; background: #E53935;">
+        <text wx:if="{{distribution.alreadyExpired > 0}}">{{distribution.alreadyExpired}}</text>
+      </view>
+      <view class="bar" style="height: {{distribution.within7Days > 0 ? distribution.within7Days * 12 + 10 : 10}}rpx; background: #FB8C00;">
+        <text wx:if="{{distribution.within7Days > 0}}">{{distribution.within7Days}}</text>
+      </view>
+      <view class="bar" style="height: {{distribution.within15Days > 0 ? distribution.within15Days * 12 + 10 : 10}}rpx; background: #FDD835;">
+        <text wx:if="{{distribution.within15Days > 0}}">{{distribution.within15Days}}</text>
+      </view>
+      <view class="bar" style="height: {{distribution.within30Days > 0 ? distribution.within30Days * 12 + 10 : 10}}rpx; background: #43A047;">
+        <text wx:if="{{distribution.within30Days > 0}}">{{distribution.within30Days}}</text>
+      </view>
+      <view class="bar" style="height: {{distribution.within90Days > 0 ? distribution.within90Days * 12 + 10 : 10}}rpx; background: #1E88E5;">
+        <text wx:if="{{distribution.within90Days > 0}}">{{distribution.within90Days}}</text>
+      </view>
+      <view class="bar" style="height: {{distribution.beyond90Days > 0 ? distribution.beyond90Days * 12 + 10 : 10}}rpx; background: #90A4AE;">
+        <text wx:if="{{distribution.beyond90Days > 0}}">{{distribution.beyond90Days}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- AI 悬浮按钮 -->
+  <view class="ai-fab" bindtap="openAiChat">
+    <text class="ai-fab-icon">🤖</text>
+  </view>
+</view>

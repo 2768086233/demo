@@ -1,0 +1,74 @@
+/** 个人中心页 */
+.page { padding-bottom: 40rpx; }
+
+/* 用户卡片 */
+.user-card {
+  display: flex;
+  align-items: center;
+  background: #fff;
+  margin: 20rpx 30rpx;
+  padding: 30rpx;
+  border-radius: 16rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.06);
+  gap: 24rpx;
+}
+.avatar, .avatar-placeholder {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.avatar-img { width: 100%; height: 100%; }
+.avatar-icon { font-size: 50rpx; }
+.login-tip { flex: 1; }
+.login-title { font-size: 32rpx; font-weight: bold; display: block; }
+.login-desc { font-size: 24rpx; color: #999; display: block; margin-top: 6rpx; }
+.user-info { flex: 1; }
+.user-name { font-size: 32rpx; font-weight: bold; display: block; }
+.user-id { font-size: 24rpx; color: #999; display: block; margin-top: 6rpx; }
+.arrow { font-size: 36rpx; color: #ccc; }
+
+/* 菜单 */
+.menu-card {
+  background: #fff;
+  margin: 0 30rpx 20rpx;
+  border-radius: 16rpx;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.06);
+  overflow: hidden;
+}
+.menu-item {
+  display: flex;
+  align-items: center;
+  padding: 28rpx 30rpx;
+  border-bottom: 1rpx solid #f5f5f5;
+  gap: 16rpx;
+}
+.menu-item:last-child { border-bottom: none; }
+.menu-icon { font-size: 36rpx; }
+.menu-text { flex: 1; font-size: 28rpx; }
+.menu-badge {
+  background: #C62828;
+  color: #fff;
+  font-size: 20rpx;
+  padding: 4rpx 16rpx;
+  border-radius: 20rpx;
+}
+.menu-extra { font-size: 26rpx; color: #999; }
+.arrow { font-size: 36rpx; color: #ccc; }
+
+/* 退出 */
+.logout-area { margin: 40rpx 30rpx; }
+.btn-logout {
+  background: #fff;
+  color: #C62828;
+  border: 2rpx solid #FFCDD2;
+  border-radius: 50rpx;
+  padding: 22rpx 0;
+  font-size: 30rpx;
+  text-align: center;
+  width: 100%;
+}

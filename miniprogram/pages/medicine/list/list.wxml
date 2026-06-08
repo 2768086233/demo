@@ -1,0 +1,83 @@
+<!-- 药品列表页 -->
+<view class="page">
+  <!-- 搜索栏 -->
+  <view class="search-bar">
+    <input class="search-input" placeholder="搜索药品名称/通用名"
+           value="{{keyword}}" bindinput="onKeywordInput"
+           bindconfirm="onSearch" confirm-type="search" />
+    <view class="search-btn" bindtap="onSearch">搜索</view>
+  </view>
+
+  <!-- 筛选标签 -->
+  <scroll-view class="filter-tabs" scroll-x>
+    <view class="tab {{currentStatus === '' ? 'active' : ''}}"
+          bindtap="filterByStatus" data-status="">全部</view>
+    <view class="tab {{currentStatus === '0' ? 'active' : ''}}"
+          bindtap="filterByStatus" data-status="0">正常</view>
+    <view class="tab {{currentStatus === '1' ? 'active' : ''}}"
+          bindtap="filterByStatus" data-status="1">临期</view>
+    <view class="tab {{currentStatus === '2' ? 'active' : ''}}"
+          bindtap="filterByStatus" data-status="2">过期</view>
+    <view class="tab {{currentStatus === '3' ? 'active' : ''}}"
+          bindtap="filterByStatus" data-status="3">已用完</view>
+  </scroll-view>
+
+  <!-- 排序 -->
+  <view class="sort-bar">
+    <text class="sort-item {{sortField === 'expiry_date' ? 'active' : ''}}"
+          bindtap="changeSort" data-field="expiry_date">
+      按有效期 {{sortField === 'expiry_date' ? (sortOrder === 'asc' ? '↑' : '↓') : ''}}
+    </text>
+    <text class="sort-item {{sortField === 'create_time' ? 'active' : ''}}"
+          bindtap="changeSort" data-field="create_time">
+      按添加时间 {{sortField === 'create_time' ? (sortOrder === 'asc' ? '↑' : '↓') : ''}}
+    </text>
+  </view>
+
+  <!-- 药品列表 -->
+  <view wx:if="{{medicineList.length > 0}}">
+    <view class="medicine-card" wx:for="{{medicineList}}" wx:key="id"
+          bindtap="goToDetail" data-id="{{item.id}}">
+      <view class="card-top">
+        <text class="medicine-name">{{item.name}}</text>
+        <text class="{{util.getStatusClass(item.status)}}">{{util.getStatusText(item.status)}}</text>
+      </view>
+      <view class="card-body">
+        <view class="card-row">
+          <text class="label">有效期至</text>
+          <text class="value {{item.status === 2 ? 'text-red' : ''}}" wx:if="{{item.expiryDate}}">
+            {{util.formatDate(item.expiryDate)}}
+            <text wx:if="{{item.status === 0 || item.status === 1}}">
+              ({{item._daysUntilExpiry === 0 ? '今日到期' : (item._daysUntilExpiry > 0 ? '剩余' + item._daysUntilExpiry + '天' : '已过期')}})
+            </text>
+          </text>
+        </view>
+        <view class="card-row">
+          <text class="label">数量</text>
+          <text class="value">{{item.quantity}} {{item.unit || '份'}}</text>
+        </view>
+        <view class="card-row" wx:if="{{item.location}}">
+          <text class="label">位置</text>
+          <text class="value">{{item.location}}</text>
+        </view>
+        <view class="card-row" wx:if="{{item.category}}">
+          <text class="label">分类</text>
+          <text class="value">{{item.category}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 加载更多 -->
+    <view wx:if="{{hasMore}}" class="load-more" bindtap="loadMore">
+      加载更多
+    </view>
+    <view wx:else class="no-more">— 没有更多了 —</view>
+  </view>
+
+  <!-- 空状态 -->
+  <view wx:else class="empty-state">
+    <text class="empty-icon">📦</text>
+    <text>暂无药品记录</text>
+    <view class="add-btn" bindtap="goToAdd">录入第一个药品</view>
+  </view>
+</view>
